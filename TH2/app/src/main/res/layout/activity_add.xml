@@ -62,7 +62,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:weightSum="3"
+        android:weightSum="2"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -77,20 +77,11 @@
             android:layout_height="wrap_content"/>
 
         <Button
-            android:id="@+id/btRemove"
+            android:id="@+id/btCancel"
             android:background="@color/yellow"
             android:layout_weight="1"
             android:layout_marginLeft="5dp"
-            android:text="Remove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/btBack"
-            android:background="@color/yellow"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:text="Back"
+            android:text="Cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>

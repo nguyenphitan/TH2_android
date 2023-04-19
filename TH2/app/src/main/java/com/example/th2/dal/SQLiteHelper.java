@@ -92,4 +92,86 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    // Update item
+    public int update(Item i) {
+        ContentValues values = new ContentValues();
+        values.put("title", i.getTitle());
+        values.put("category", i.getCategory());
+        values.put("price", i.getPrice());
+        values.put("date", i.getDate());
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        String whereClause = "id = ?";
+        String[] whereArgs = {Integer.toString(i.getId())};
+
+        return sqLiteDatabase.update("items", values, whereClause, whereArgs);
+    }
+
+    // Delete item
+    public int delete(int id) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        String whereClause = "id = ?";
+        String[] whereArgs = {Integer.toString(id)};
+        return sqLiteDatabase.delete("items", whereClause, whereArgs);
+    }
+
+    // Search by title
+    public List<Item> searchByTitle(String key) {
+        List<Item> list = new ArrayList<>();
+        String whereClause = "title like ?";
+        String[] whereArgs = {"%" + key + "%"};
+        SQLiteDatabase st = getReadableDatabase();
+        Cursor rs = st.query("items", null, whereClause, whereArgs, null, null, null);
+
+        while(rs != null && rs.moveToNext()) {
+            int id = rs.getInt(0);
+            String title = rs.getString(1);
+            String category = rs.getString(2);
+            String price = rs.getString(3);
+            String date = rs.getString(4);
+            list.add(new Item(id, title, category, price, date));
+        }
+
+        return list;
+    }
+
+    // Search by category
+    public List<Item> searchByCategory(String category) {
+        List<Item> list = new ArrayList<>();
+        String whereClause = "category like ?";
+        String[] whereArgs = {category};
+        SQLiteDatabase st = getReadableDatabase();
+        Cursor rs = st.query("items", null, whereClause, whereArgs, null, null, null);
+
+        while(rs != null && rs.moveToNext()) {
+            int id = rs.getInt(0);
+            String title = rs.getString(1);
+            String c = rs.getString(2);
+            String price = rs.getString(3);
+            String date = rs.getString(4);
+            list.add(new Item(id, title, c, price, date));
+        }
+
+        return list;
+    }
+
+    // Search by date
+    public List<Item> searchByDate(String from, String to) {
+        List<Item> list = new ArrayList<>();
+        String whereClause = "date BETWEEN ? AND ?";
+        String[] whereArgs = {from.trim(), to.trim()};
+        SQLiteDatabase st = getReadableDatabase();
+        Cursor rs = st.query("items", null, whereClause, whereArgs, null, null, null);
+
+        while(rs != null && rs.moveToNext()) {
+            int id = rs.getInt(0);
+            String title = rs.getString(1);
+            String category = rs.getString(2);
+            String price = rs.getString(3);
+            String date = rs.getString(4);
+            list.add(new Item(id, title, category, price, date));
+        }
+
+        return list;
+    }
+
 }
